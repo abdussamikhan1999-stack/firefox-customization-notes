@@ -4,7 +4,10 @@ Notes distilled from `/FFFCG/` (Firefox & Friends Customization General,
 4chan `/g/`-style) — `user.js` privacy/performance tweaks, `userChrome.css`
 UI theming, and Firefox-derivative browsers.
 
-See [LINKS.md](LINKS.md) for the full raw link list, organized by section.
+See [LINKS.md](LINKS.md) for the full raw link list, organized by section,
+and [applied-profile/](applied-profile/) for an actual, working config
+built from these links and tested against a real Firefox — not just a
+summary of what's out there.
 
 ## The two config files this general revolves around
 
