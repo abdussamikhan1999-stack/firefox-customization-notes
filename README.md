@@ -82,10 +82,17 @@ than pasting all three.
   **Split View** (up to 4 pages in one window), pinnable Web Panels
   (sidebar mini-browser for any site). Closer to an "Arc browser for
   Firefox" pitch than a pure privacy fork.
-- **Zen Browser** — (site returned 403 to automated fetch; from general
-  knowledge, verify before relying on this) positions itself similarly to
-  Floorp — vertical tabs, workspaces, a more Arc-browser-like aesthetic —
-  worth comparing directly against Floorp since they target the same niche.
+- **Zen Browser** — (site itself still 403s automated fetches; verified via
+  independent reviews instead — [OMG Ubuntu](https://www.omgubuntu.co.uk/2025/08/zen-browser-is-what-mozilla-firefox-should-be),
+  [XDA Developers](https://www.xda-developers.com/this-firefox-fork-fixed-every-complaint-i-had-with-mozilla/))
+  positions itself similarly to Floorp — vertical tabs by default,
+  **Workspaces** (each keeps its own session state and cookies, not just a
+  tab-grouping label), **Split View** (2–4 tabs in a binary-tree grid — a
+  wide screen can genuinely drive a full 4-tab layout), plus Compact Mode
+  and "Glance" link previews. Open-source (MPL 2.0), same rendering engine
+  as Firefox — the novelty is entirely the interface/workflow layer, not a
+  new engine. Reviews as of mid-2025/2026 still describe it as beta
+  software, worth knowing before treating it as daily-driver-stable.
 - **GNU IceCat** (gnu.org/software/gnuzilla) — the FSF's fully-free-software
   Firefox rebuild (strips anything non-free, including some codecs/DRM
   hooks); the "software freedom purist" option, at some functionality cost.
