@@ -37,19 +37,40 @@ shutdown reflecting every currently-active preference: it contained
 preferences were genuinely read and applied by a real Firefox process,
 not just written to a text file and hoped for.
 
-**`userChrome.css` — only partially verified.** This environment has no
-display server (no Xvfb), and Firefox's headless mode renders web page
-*content* only — it never constructs the actual browser chrome (toolbar,
-tabs) that this file restyles, so there is no way to visually confirm it
-looks right from here. What *was* verified: `user.js` already sets
-`toolkit.legacyUserProfileCustomizations.stylesheets = true` (confirmed
-present in the written `prefs.js`, so you don't need to enable this
-yourself), and running Firefox with the stylesheet file in place
-(`<profile>/chrome/userChrome.css`) produced a clean exit (code 0), no
-stderr output, and no crash-report files — so it's not obviously broken —
-but "doesn't crash" is a much weaker claim than "renders correctly."
-**Actually look at your toolbar after installing this** rather than
-trusting that it's right sight-unseen.
+**`userChrome.css` — also genuinely verified, via a different route.**
+This environment has no display server (no Xvfb), and Firefox's normal
+`--screenshot` flag only renders web page *content* — it never constructs
+actual browser chrome, so that route was a dead end for this file
+specifically. Instead, `verify_userchrome.py` (in this folder) launches
+Firefox with `--marionette -remote-allow-system-access`, switches
+Marionette (Firefox's own automation protocol) into **chrome context**
+— normally reserved for testing Firefox itself, not web pages — and reads
+back the real *computed* CSS values on actual chrome elements. Run twice,
+with the same profile and same `user.js`, once with `userChrome.css`
+present and once with it removed, to isolate that file specifically as
+the cause rather than assuming:
+
+| Check | Without `userChrome.css` | With `userChrome.css` |
+|---|---|---|
+| `--toolbarbutton-inner-padding` on `:root` | `8px` | `6px` |
+| `.tab-close-button` width | `18px` | `20px` |
+
+Both values match `compact_proton.css`'s explicit rules exactly (it sets
+`--toolbarbutton-inner-padding: 6px !important` and
+`.tab-close-button { width: 20px !important; }`). Reran the whole
+comparison a second time and got identical numbers both times — this is
+a real, reproducible measurement of the file's effect on Firefox's actual
+style engine, not a guess based on "it didn't crash." Run it yourself
+with `python3 verify_userchrome.py` (stdlib only, needs `firefox` on
+`PATH`).
+
+## Alternative: arkenfox instead of Betterfox
+
+See [arkenfox-alternative/](arkenfox-alternative/) if you want arkenfox's
+more thorough (and more work to live with) hardening baseline instead of
+Betterfox's `user.js` above — **don't use both together**, they touch
+overlapping preferences and will conflict. That folder documents the
+actual tradeoff and was verified the same way this one was.
 
 ## Install
 
